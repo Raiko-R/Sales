@@ -300,6 +300,42 @@ footer p{font-size:13px;color:var(--text3)}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 
+
+/* ── ROLEPLAY CHAT ── */
+.roleplay-container{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
+.chat-messages{flex:1;overflow-y:auto;padding:24px 48px;display:flex;flex-direction:column;gap:16px;min-height:0}
+.chat-input-area{padding:12px 48px 16px;border-top:1px solid var(--border);flex-shrink:0}
+.chat-input-row{display:flex;gap:10px;align-items:flex-end}
+.chat-textarea{flex:1;background:var(--surface2);border:1.5px solid var(--border2);border-radius:10px;padding:10px 14px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);resize:none;outline:none;min-height:42px;max-height:140px;transition:border-color .15s;line-height:1.5;overflow-y:auto}
+.chat-textarea:focus{border-color:var(--indigo)}
+.chat-send-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:0 20px;font-size:14px;font-weight:500;cursor:pointer;flex-shrink:0;transition:background .15s;height:42px}
+.chat-send-btn:hover{background:var(--indigo-light)}
+.chat-send-btn:disabled{opacity:0.5;cursor:not-allowed}
+.chat-meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.chat-hint{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.chat-reset-link{font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline}
+.chat-reset-link:hover{color:var(--text2)}
+.typing-indicator{display:inline-flex;align-items:center;gap:4px;padding:12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px 12px 12px 2px;width:fit-content}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:typingBounce 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+.coaching-block{background:rgba(79,70,229,0.06);border:1px solid rgba(79,70,229,0.2);border-radius:10px;padding:14px 18px;margin-top:4px;font-size:12.5px;max-width:82%;align-self:flex-start}
+.coaching-title{font-family:var(--mono);font-size:10px;color:var(--indigo-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.score-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.pill{padding:3px 9px;border-radius:100px;font-family:var(--mono);font-size:10px;font-weight:500;white-space:nowrap}
+.pill-good{background:var(--emerald-dim);color:var(--emerald);border:1px solid rgba(16,185,129,0.3)}
+.pill-ok{background:rgba(245,158,11,0.1);color:var(--amber);border:1px solid rgba(245,158,11,0.3)}
+.pill-miss{background:rgba(239,68,68,0.08);color:var(--red);border:1px solid rgba(239,68,68,0.25)}
+.coach-row{display:flex;gap:6px;margin-bottom:5px;font-size:12px;color:var(--text2);line-height:1.5}
+.coach-label{font-family:var(--mono);font-size:10px;color:var(--indigo-light);flex-shrink:0;padding-top:1px;min-width:60px}
+.api-key-banner{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:18px 22px;margin-bottom:12px}
+.api-key-banner p{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.6}
+.api-key-row{display:flex;gap:8px}
+.api-key-input{flex:1;background:var(--surface);border:1.5px solid var(--border2);border-radius:8px;padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;transition:border-color .15s}
+.api-key-input:focus{border-color:var(--indigo)}
+.api-key-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;flex-shrink:0}
+
 /* responsive */
 @media(max-width:900px){
   .topnav{padding:0 20px}
@@ -309,6 +345,8 @@ footer p{font-size:13px;color:var(--text3)}
   .company-card{grid-template-columns:1fr}
   .app-shell{grid-template-columns:1fr}
   .app-sidebar{display:none}
+  .chat-messages{padding:16px 20px}
+  .chat-input-area{padding:10px 20px 14px}
 }
 </style>
 </head>
@@ -671,22 +709,22 @@ footer p{font-size:13px;color:var(--text3)}
           <span class="track-group-chevron open">›</span>
         </div>
         <div class="lesson-list" style="display:flex">
-          <div class="lesson-item active" onclick="loadLesson('t1m1')">
+          <div class="lesson-item active" onclick="loadLesson('t1m1')" data-lesson-id="t1m1">
             <div class="lesson-dot"></div>
             <div class="lesson-name">The Consultative Mindset</div>
             <span class="lesson-type-badge badge-theory">Theory</span>
           </div>
-          <div class="lesson-item" onclick="loadLesson('t1m2')">
+          <div class="lesson-item" onclick="loadLesson('t1m2')" data-lesson-id="t1m2">
             <div class="lesson-dot"></div>
             <div class="lesson-name">Discovery & SPIN Selling</div>
             <span class="lesson-type-badge badge-roleplay">Roleplay</span>
           </div>
-          <div class="lesson-item" onclick="loadLesson('t1m3')">
+          <div class="lesson-item" onclick="loadLesson('t1m3')" data-lesson-id="t1m3">
             <div class="lesson-dot"></div>
             <div class="lesson-name">Active Listening</div>
             <span class="lesson-type-badge badge-quiz">Quiz</span>
           </div>
-          <div class="lesson-item" onclick="loadLesson('t1m4')">
+          <div class="lesson-item" onclick="loadLesson('t1m4')" data-lesson-id="t1m4">
             <div class="lesson-dot"></div>
             <div class="lesson-name">Building Rapport</div>
             <span class="lesson-type-badge badge-theory">Theory</span>
@@ -703,11 +741,11 @@ footer p{font-size:13px;color:var(--text3)}
           <span class="track-group-chevron">›</span>
         </div>
         <div class="lesson-list" style="display:none">
-          <div class="lesson-item locked" onclick="loadLesson('t2m1')"><div class="lesson-dot"></div><div class="lesson-name">Prospecting & Outreach</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
-          <div class="lesson-item locked" onclick="loadLesson('t2m2')"><div class="lesson-dot"></div><div class="lesson-name">The Discovery Call</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
-          <div class="lesson-item locked" onclick="loadLesson('t2m3')"><div class="lesson-dot"></div><div class="lesson-name">The Demo</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
-          <div class="lesson-item locked" onclick="loadLesson('t2m4')"><div class="lesson-dot"></div><div class="lesson-name">Proposal & Pricing</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
-          <div class="lesson-item locked" onclick="loadLesson('t2m5')"><div class="lesson-dot"></div><div class="lesson-name">Stakeholder Management</div><span class="lesson-type-badge badge-theory">Theory</span></div>
+          <div class="lesson-item locked" onclick="loadLesson('t2m1')" data-lesson-id="t2m1"><div class="lesson-dot"></div><div class="lesson-name">Prospecting & Outreach</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
+          <div class="lesson-item locked" onclick="loadLesson('t2m2')" data-lesson-id="t2m2"><div class="lesson-dot"></div><div class="lesson-name">The Discovery Call</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item locked" onclick="loadLesson('t2m3')" data-lesson-id="t2m3"><div class="lesson-dot"></div><div class="lesson-name">The Demo</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item locked" onclick="loadLesson('t2m4')" data-lesson-id="t2m4"><div class="lesson-dot"></div><div class="lesson-name">Proposal & Pricing</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
+          <div class="lesson-item locked" onclick="loadLesson('t2m5')" data-lesson-id="t2m5"><div class="lesson-dot"></div><div class="lesson-name">Stakeholder Management</div><span class="lesson-type-badge badge-theory">Theory</span></div>
         </div>
       </div>
 
@@ -720,10 +758,10 @@ footer p{font-size:13px;color:var(--text3)}
           <span class="track-group-chevron">›</span>
         </div>
         <div class="lesson-list" style="display:none">
-          <div class="lesson-item" onclick="loadLesson('t3m1')"><div class="lesson-dot"></div><div class="lesson-name">Psychology of Objections</div><span class="lesson-type-badge badge-theory">Theory</span></div>
-          <div class="lesson-item" onclick="loadLesson('t3m2')"><div class="lesson-dot"></div><div class="lesson-name">The AER Framework</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
-          <div class="lesson-item" onclick="loadLesson('t3m3')"><div class="lesson-dot"></div><div class="lesson-name">Competitor Positioning</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
-          <div class="lesson-item" onclick="loadLesson('t3m4')"><div class="lesson-dot"></div><div class="lesson-name">The Status Quo Objection</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item" onclick="loadLesson('t3m1')" data-lesson-id="t3m1"><div class="lesson-dot"></div><div class="lesson-name">Psychology of Objections</div><span class="lesson-type-badge badge-theory">Theory</span></div>
+          <div class="lesson-item" onclick="loadLesson('t3m2')" data-lesson-id="t3m2"><div class="lesson-dot"></div><div class="lesson-name">The AER Framework</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
+          <div class="lesson-item" onclick="loadLesson('t3m3')" data-lesson-id="t3m3"><div class="lesson-dot"></div><div class="lesson-name">Competitor Positioning</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item" onclick="loadLesson('t3m4')" data-lesson-id="t3m4"><div class="lesson-dot"></div><div class="lesson-name">The Status Quo Objection</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
         </div>
       </div>
 
@@ -736,10 +774,10 @@ footer p{font-size:13px;color:var(--text3)}
           <span class="track-group-chevron">›</span>
         </div>
         <div class="lesson-list" style="display:none">
-          <div class="lesson-item" onclick="loadLesson('t4m1')"><div class="lesson-dot"></div><div class="lesson-name">Reading Buying Signals</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
-          <div class="lesson-item" onclick="loadLesson('t4m2')"><div class="lesson-dot"></div><div class="lesson-name">The Next Step Close</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
-          <div class="lesson-item" onclick="loadLesson('t4m3')"><div class="lesson-dot"></div><div class="lesson-name">Negotiation Basics</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
-          <div class="lesson-item" onclick="loadLesson('t4m4')"><div class="lesson-dot"></div><div class="lesson-name">Close & Handoff</div><span class="lesson-type-badge badge-theory">Theory</span></div>
+          <div class="lesson-item" onclick="loadLesson('t4m1')" data-lesson-id="t4m1"><div class="lesson-dot"></div><div class="lesson-name">Reading Buying Signals</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
+          <div class="lesson-item" onclick="loadLesson('t4m2')" data-lesson-id="t4m2"><div class="lesson-dot"></div><div class="lesson-name">The Next Step Close</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item" onclick="loadLesson('t4m3')" data-lesson-id="t4m3"><div class="lesson-dot"></div><div class="lesson-name">Negotiation Basics</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item" onclick="loadLesson('t4m4')" data-lesson-id="t4m4"><div class="lesson-dot"></div><div class="lesson-name">Close & Handoff</div><span class="lesson-type-badge badge-theory">Theory</span></div>
         </div>
       </div>
 
@@ -752,9 +790,9 @@ footer p{font-size:13px;color:var(--text3)}
           <span class="track-group-chevron">›</span>
         </div>
         <div class="lesson-list" style="display:none">
-          <div class="lesson-item" onclick="loadLesson('t5m1')"><div class="lesson-dot"></div><div class="lesson-name">The Challenger Sale</div><span class="lesson-type-badge badge-theory">Theory</span></div>
-          <div class="lesson-item" onclick="loadLesson('t5m2')"><div class="lesson-dot"></div><div class="lesson-name">MEDDIC Qualification</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
-          <div class="lesson-item" onclick="loadLesson('t5m3')"><div class="lesson-dot"></div><div class="lesson-name">Enterprise Selling</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
+          <div class="lesson-item" onclick="loadLesson('t5m1')" data-lesson-id="t5m1"><div class="lesson-dot"></div><div class="lesson-name">The Challenger Sale</div><span class="lesson-type-badge badge-theory">Theory</span></div>
+          <div class="lesson-item" onclick="loadLesson('t5m2')" data-lesson-id="t5m2"><div class="lesson-dot"></div><div class="lesson-name">MEDDIC Qualification</div><span class="lesson-type-badge badge-quiz">Quiz</span></div>
+          <div class="lesson-item" onclick="loadLesson('t5m3')" data-lesson-id="t5m3"><div class="lesson-dot"></div><div class="lesson-name">Enterprise Selling</div><span class="lesson-type-badge badge-roleplay">Roleplay</span></div>
         </div>
       </div>
 
@@ -935,6 +973,583 @@ footer p{font-size:13px;color:var(--text3)}
         </div>
       </div>
 
+
+      <!-- ═══════════════════════════════════════════════════
+           LESSON T1M2: Discovery & SPIN Selling
+           ═══════════════════════════════════════════════════ -->
+
+      <!-- STEP 1: THEORY -->
+      <div class="lesson-panel" id="t1m2-step1">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 2 · Theory</div>
+          <h1 class="lesson-title">Discovery & SPIN Selling</h1>
+          <p class="lesson-intro">You've mastered the consultative mindset. Now you need the question framework that turns curiosity into structured discovery. SPIN is how top AEs uncover pain without interrogating buyers.</p>
+
+          <div class="content-block">
+            <h3>Why most discovery calls fail</h3>
+            <p>AEs ask too many closed questions too fast. "Do you have a time tracking problem?" "Are you happy with your invoicing?" These shut buyers down. They get a yes or no, and learn nothing. SPIN replaces guessing with a sequence that progressively deepens the conversation.</p>
+          </div>
+
+          <div class="highlight-box">
+            <div class="hl-label">The SPIN Framework</div>
+            <p style="font-size:14px;color:var(--text2);margin-bottom:14px">Four question types, in sequence. Each layer builds on the last.</p>
+            <div class="framework-grid">
+              <div class="fw-item"><div class="fw-letter">S</div><div class="fw-word">Situation</div><div class="fw-desc">Establish facts about the buyer's current state. Use sparingly — too many and it feels like an interrogation.</div></div>
+              <div class="fw-item"><div class="fw-letter">P</div><div class="fw-word">Problem</div><div class="fw-desc">Surface difficulties and frustrations. "Where does this tend to break down?" — open, non-leading.</div></div>
+              <div class="fw-item"><div class="fw-letter">I</div><div class="fw-word">Implication</div><div class="fw-desc">Explore the consequences of the problem. This is where urgency is created — without pressure.</div></div>
+              <div class="fw-item"><div class="fw-letter">N</div><div class="fw-word">Need-Payoff</div><div class="fw-desc">Let the buyer articulate the value of solving it. They sell themselves — you just guide.</div></div>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3>SPIN in a Flowline discovery call</h3>
+            <p>Here's how all four types play out in a single conversation with Sarah Patel, Finance Manager:</p>
+          </div>
+
+          <div class="vs-row" style="grid-template-columns:auto 1fr">
+            <div class="vs-good" style="grid-column:1/-1">
+              <div class="vs-label" style="color:var(--indigo-light)">S — Situation</div>
+              <div class="vs-text">"How many tools does your team currently use to get from a completed project to a sent invoice?"</div>
+            </div>
+          </div>
+          <div class="vs-row" style="grid-template-columns:auto 1fr;margin-top:8px">
+            <div class="vs-good" style="grid-column:1/-1">
+              <div class="vs-label" style="color:var(--emerald)">P — Problem</div>
+              <div class="vs-text">"Where does that process tend to go wrong — is it data collection, the reconciliation, or something else?"</div>
+            </div>
+          </div>
+          <div class="vs-row" style="grid-template-columns:auto 1fr;margin-top:8px">
+            <div class="vs-good" style="grid-column:1/-1">
+              <div class="vs-label" style="color:var(--amber)">I — Implication</div>
+              <div class="vs-text">"When an invoice goes out with an error, what does that typically mean for the client relationship — and your team's time to fix it?"</div>
+            </div>
+          </div>
+          <div class="vs-row" style="grid-template-columns:auto 1fr;margin-top:8px">
+            <div class="vs-good" style="grid-column:1/-1">
+              <div class="vs-label" style="color:var(--indigo-light)">N — Need-Payoff</div>
+              <div class="vs-text">"If you could close month-end in one day instead of five, what would that free your team up to actually focus on?"</div>
+            </div>
+          </div>
+
+          <div class="callout-box" style="margin-top:24px">
+            <strong>The rule of implication questions:</strong> Don't rush to Need-Payoff. Most AEs skip straight there and get shallow answers. Spend time on Implication — when the buyer feels the real cost of their problem, they are already half-sold before you say anything about your product.
+          </div>
+
+          <div class="content-block" style="margin-top:28px">
+            <h3>Prepare your SPIN bank before every call</h3>
+            <p>Before each discovery call, write three questions for each SPIN category tailored to what you know about the prospect. You won't use them all — but having them ready means you never freeze up. The best AEs sound spontaneous because they've prepared thoroughly.</p>
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="loadLesson('t1m1')" data-lesson-id="t1m1">← Back to Module 1</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot current"></div><div class="step-dot"></div><div class="step-dot"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="goStep('t1m2',2)">Next: Knowledge check →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: QUIZ -->
+      <div class="lesson-panel" id="t1m2-step2">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 2 · Knowledge Check</div>
+          <h1 class="lesson-title">Classify the questions</h1>
+          <p class="lesson-intro">Each question below was asked in a Flowline discovery call. Identify which SPIN type each one is.</p>
+
+          <!-- MCQ 1 -->
+          <div class="quiz-block">
+            <div class="quiz-q">Q1 — "How many people are currently in your finance team, and which tools are they using day-to-day?"</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_1','correct')"><div class="quiz-opt-letter">A</div>Situation — establishing facts about the buyer's current setup</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_1','wrong')"><div class="quiz-opt-letter">B</div>Problem — surfacing a difficulty</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_1','wrong')"><div class="quiz-opt-letter">C</div>Implication — exploring consequences</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_1','wrong')"><div class="quiz-opt-letter">D</div>Need-Payoff — asking about the value of a solution</div>
+            </div>
+            <div class="quiz-feedback correct" id="q12_1-correct">✓ Situation. This question gathers context — headcount and tools. It sets the foundation for deeper SPIN questions. Use it early, sparingly.</div>
+            <div class="quiz-feedback wrong" id="q12_1-wrong">Not quite. This is a factual, context-gathering question — no pain, no consequences, no solution value. That puts it firmly in Situation.</div>
+          </div>
+
+          <!-- MCQ 2 -->
+          <div class="quiz-block">
+            <div class="quiz-q">Q2 — "Where does your invoicing process tend to break down most often?"</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_2','wrong')"><div class="quiz-opt-letter">A</div>Situation</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_2','correct')"><div class="quiz-opt-letter">B</div>Problem — surfacing friction in their current process</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_2','wrong')"><div class="quiz-opt-letter">C</div>Implication</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_2','wrong')"><div class="quiz-opt-letter">D</div>Need-Payoff</div>
+            </div>
+            <div class="quiz-feedback correct" id="q12_2-correct">✓ Problem. "Where does it break down" is an open question inviting the buyer to describe difficulty. It surfaces friction — the raw material you need before you can probe implications.</div>
+            <div class="quiz-feedback wrong" id="q12_2-wrong">This is a Problem question. It asks where things go wrong, inviting the buyer to describe their pain. Situation questions are about facts; this is about friction.</div>
+          </div>
+
+          <!-- MCQ 3 -->
+          <div class="quiz-block">
+            <div class="quiz-q">Q3 — "When an invoice goes out with an error, what does that typically mean for the client relationship?"</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_3','wrong')"><div class="quiz-opt-letter">A</div>Situation</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_3','wrong')"><div class="quiz-opt-letter">B</div>Problem</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_3','correct')"><div class="quiz-opt-letter">C</div>Implication — exploring the downstream consequences of the problem</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_3','wrong')"><div class="quiz-opt-letter">D</div>Need-Payoff</div>
+            </div>
+            <div class="quiz-feedback correct" id="q12_3-correct">✓ Implication. The problem (invoice errors) was already established. This question digs into the consequences — relationship damage, time to fix, trust eroded. This is where urgency lives.</div>
+            <div class="quiz-feedback wrong" id="q12_3-wrong">This is Implication. It starts from a known problem (invoice errors) and explores what that costs the buyer — in relationship capital, time, and trust. That's deeper than Problem.</div>
+          </div>
+
+          <!-- MCQ 4 -->
+          <div class="quiz-block">
+            <div class="quiz-q">Q4 — "If you could close month-end in one day instead of five, what would that free your analysts up to actually work on?"</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_4','wrong')"><div class="quiz-opt-letter">A</div>Situation</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_4','wrong')"><div class="quiz-opt-letter">B</div>Problem</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_4','wrong')"><div class="quiz-opt-letter">C</div>Implication</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q12_4','correct')"><div class="quiz-opt-letter">D</div>Need-Payoff — letting the buyer articulate the value of solving the problem</div>
+            </div>
+            <div class="quiz-feedback correct" id="q12_4-correct">✓ Need-Payoff. The buyer is now describing the upside — what they'd gain. When Sarah answers this, she's selling herself on the solution. Your job is just to listen and confirm.</div>
+            <div class="quiz-feedback wrong" id="q12_4-wrong">This is Need-Payoff. The "if you could..." framing invites the buyer to describe life after the problem is solved. They articulate the value — far more persuasive than if you told them.</div>
+          </div>
+
+          <!-- Fill-the-blank -->
+          <div class="fitb-block">
+            <div class="quiz-q">Complete the missing implication question in this transcript:</div>
+            <div class="fitb-sentence" style="font-size:14px">
+              Marcus: <em style="color:var(--text2)">"We pull data from three tools manually every Monday morning to build our ops report."</em><br><br>
+              You: <em style="color:var(--text2)">"That sounds time-consuming. When that process</em>
+              <input class="blank-input" id="b12_1" placeholder="..." style="width:140px" readonly>
+              <em style="color:var(--text2)">, what's the</em>
+              <input class="blank-input" id="b12_2" placeholder="..." style="width:160px" readonly>
+              <em style="color:var(--text2)"> for your planning that week?"</em>
+            </div>
+            <div class="fitb-options">
+              <div class="fitb-chip" onclick="selectChip(this,'b12_1','breaks down')">breaks down</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b12_1','runs smoothly')">runs smoothly</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b12_2','knock-on effect')">knock-on effect</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b12_2','best outcome')">best outcome</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b12_1','completes fine')">completes fine</div>
+            </div>
+            <div class="quiz-feedback" id="b12-feedback"></div>
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="goStep('t1m2',1)">← Back</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot done"></div><div class="step-dot current"></div><div class="step-dot"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="goStep('t1m2',3)">Next: AI Roleplay →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: AI ROLEPLAY -->
+      <div class="lesson-panel" id="t1m2-step3">
+        <div class="roleplay-container">
+          <div class="lesson-body" style="flex:0;padding-bottom:0">
+            <div class="lesson-eyebrow">Track 1 · Module 2 · AI Roleplay</div>
+            <h1 class="lesson-title" style="font-size:22px;margin-bottom:6px">Practise SPIN with Marcus Chen</h1>
+            <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:0">Marcus Chen is Head of Operations at FreightCore, a 300-person logistics firm. He's guarded but has real operational pain. Use your SPIN questions to uncover it. You'll get coaching after every message.</p>
+          </div>
+          <div id="t1m2-messages" class="chat-messages">
+            <!-- messages injected by JS on load -->
+          </div>
+          <div class="chat-input-area">
+            <div id="t1m2-api-banner" class="api-key-banner" style="display:none">
+              <p>This exercise calls the Anthropic AI. Enter your API key to enable it — it's stored only in your browser and never sent anywhere except Anthropic's API.</p>
+              <div class="api-key-row">
+                <input type="password" id="api-key-field" class="api-key-input" placeholder="sk-ant-api03-...">
+                <button class="api-key-btn" onclick="saveApiKey('t1m2')">Save & Start</button>
+              </div>
+            </div>
+            <div class="chat-input-row">
+              <textarea id="t1m2-input" class="chat-textarea" placeholder="Type your message to Marcus..." rows="1" onkeydown="handleChatKey(event,'t1m2')"></textarea>
+              <button class="chat-send-btn" id="t1m2-send" onclick="sendRoleplay('t1m2')">Send →</button>
+            </div>
+            <div class="chat-meta">
+              <span class="chat-hint">Enter to send · Shift+Enter for new line</span>
+              <span class="chat-reset-link" onclick="resetRoleplay('t1m2')">Reset conversation</span>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="goStep('t1m2',2)">← Back</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot current"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="completeLesson('t1m2', 200, 'Active Listening')">Complete lesson →</button>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           LESSON T1M3: Active Listening & Note-Taking
+           ═══════════════════════════════════════════════════ -->
+
+      <!-- STEP 1: THEORY -->
+      <div class="lesson-panel" id="t1m3-step1">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 3 · Theory</div>
+          <h1 class="lesson-title">Active Listening & Note-Taking</h1>
+          <p class="lesson-intro">Asking good SPIN questions is only half the job. Most AEs listen just well enough to ask their next question. Top performers listen to understand — and they know exactly what to capture and why.</p>
+
+          <div class="content-block">
+            <h3>The three levels of listening</h3>
+            <p>Not all listening is equal. Research in sales coaching identifies three distinct layers, and most reps operate at level one.</p>
+          </div>
+
+          <div class="framework-grid" style="margin-bottom:28px">
+            <div class="fw-item">
+              <div class="fw-letter" style="font-size:18px">1</div>
+              <div class="fw-word">Surface (words)</div>
+              <div class="fw-desc">You hear what the buyer says and retain the literal content. Most reps stay here. They remember features mentioned, not feelings.</div>
+            </div>
+            <div class="fw-item">
+              <div class="fw-letter" style="font-size:18px">2</div>
+              <div class="fw-word">Interpretive (meaning)</div>
+              <div class="fw-desc">You understand what they're really saying beyond the words. "We manage" often means "we're in pain but don't want to admit it."</div>
+            </div>
+            <div class="fw-item" style="border-color:rgba(79,70,229,0.3)">
+              <div class="fw-letter" style="font-size:18px;color:var(--indigo-light)">3</div>
+              <div class="fw-word" style="color:var(--indigo-light)">Empathic (emotion)</div>
+              <div class="fw-desc">You sense how they feel about the situation. Sarah says "we had a £12k error last quarter" flatly — but she's embarrassed. That matters for how you position the solution.</div>
+            </div>
+            <div class="fw-item">
+              <div class="fw-letter" style="font-size:18px;color:var(--text3)">0</div>
+              <div class="fw-word" style="color:var(--text3)">Preoccupied</div>
+              <div class="fw-desc">You're half-listening while planning your next question or pitch. Common. Fatal. Buyers notice immediately.</div>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3>What to capture during a call</h3>
+            <p>Your notes are the foundation of your next step — a follow-up email, a proposal, a demo. If you can't reference what the buyer said in your own words, you sound like you weren't listening.</p>
+          </div>
+
+          <div class="highlight-box">
+            <div class="hl-label">Capture these 5 things</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+              <div style="display:flex;gap:10px;font-size:13px"><span style="color:var(--indigo-light);font-family:var(--mono);font-size:11px;flex-shrink:0;padding-top:1px">PAIN</span><span style="color:var(--text2)">The specific problem they described, in their language — not your summary of it.</span></div>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="color:var(--indigo-light);font-family:var(--mono);font-size:11px;flex-shrink:0;padding-top:1px">STAKES</span><span style="color:var(--text2)">What it costs them: time, money, reputation, relationships.</span></div>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="color:var(--indigo-light);font-family:var(--mono);font-size:11px;flex-shrink:0;padding-top:1px">WHO</span><span style="color:var(--text2)">Every stakeholder mentioned — names, titles, opinions.</span></div>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="color:var(--indigo-light);font-family:var(--mono);font-size:11px;flex-shrink:0;padding-top:1px">TIMELINE</span><span style="color:var(--text2)">Any date signals: budget cycles, upcoming reviews, expiring contracts.</span></div>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="color:var(--indigo-light);font-family:var(--mono);font-size:11px;flex-shrink:0;padding-top:1px">SIGNALS</span><span style="color:var(--text2)">Buying signals ("can you send the contract?") and competitor mentions.</span></div>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3>The post-call summary email</h3>
+            <p>Send within 30 minutes of hanging up. The summary email does two things: it proves you listened, and it locks in the next step. Structure it in three paragraphs: what you heard, what you're sending, and what happens next.</p>
+          </div>
+
+          <div class="highlight-box">
+            <div class="hl-label">Summary email structure</div>
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-top:4px">
+              <strong style="color:var(--text)">Para 1 — What I heard:</strong> Reflect their problem back in their own language. No features, no pitch.<br>
+              <strong style="color:var(--text)">Para 2 — What I'm sending:</strong> Relevant case study, ROI estimate, or proposal — whatever was agreed.<br>
+              <strong style="color:var(--text)">Para 3 — Next step:</strong> Date, time, attendees, agenda. Already in the calendar.
+            </p>
+          </div>
+
+          <div class="callout-box">
+            <strong>What to skip:</strong> Don't transcribe everything. Ignore small talk, filler phrases, and hypotheticals ("if we were ever going to do something like this..."). If they didn't commit to it, don't record it as a signal.
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="loadLesson('t1m2')" data-lesson-id="t1m2">← Back to Module 2</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot current"></div><div class="step-dot"></div><div class="step-dot"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="goStep('t1m3',2)">Next: Knowledge check →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: QUIZ -->
+      <div class="lesson-panel" id="t1m3-step2">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 3 · Knowledge Check</div>
+          <h1 class="lesson-title">Write the follow-up email</h1>
+          <p class="lesson-intro">Read the call summary below, then complete the post-call email to Sarah Patel.</p>
+
+          <div class="callout-box" style="margin-bottom:24px">
+            <strong>Call summary — Sarah Patel, Meridian Advisory:</strong> 90-person consultancy. Month-end close takes 5 days (reconciling 3 systems). Sent a £12k invoicing error to a client last quarter — CFO is now scrutinising finance. Two analysts spending 3 days/week on data reconciliation instead of analysis. Budget exists. Timeline: "sometime this year" — no urgency yet. Decision: Sarah recommends, CFO approves.
+          </div>
+
+          <div class="fitb-block">
+            <div class="quiz-q">Complete the post-call email:</div>
+            <div class="fitb-sentence" style="font-size:13.5px;line-height:2.2">
+              Hi Sarah,<br><br>
+              <input class="blank-input" id="b13_1" placeholder="..." style="width:80px" readonly> to connect today. Based on our conversation, my understanding is:<br><br>
+              Your team is currently
+              <input class="blank-input" id="b13_2" placeholder="..." style="width:160px" readonly>
+              data across three systems at month-end — a process that's taking around
+              <input class="blank-input" id="b13_3" placeholder="..." style="width:60px" readonly>
+              days and creating accuracy issues that have already reached a client.<br><br>
+              I'll send over a short case study from a firm similar to yours, along with an ROI estimate. We've agreed to speak again <strong style="color:var(--text)">Thursday at 2pm</strong> — I've sent a calendar invite.
+            </div>
+            <div class="fitb-options">
+              <div class="fitb-chip" onclick="selectChip(this,'b13_1','Great')">Great</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b13_1','Good')">Good</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b13_2','reconciling')">reconciling</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b13_2','collecting')">collecting</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b13_3','5')">5</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b13_3','3')">3</div>
+              <div class="fitb-chip" onclick="selectChip(this,'b13_1','Nice')">Nice</div>
+            </div>
+            <div class="quiz-feedback" id="b13-feedback"></div>
+          </div>
+
+          <!-- Recall quiz -->
+          <div class="quiz-block" style="margin-top:8px">
+            <div class="quiz-q">Recall check: What level of decision-making authority does Sarah Patel have?</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_1','wrong')"><div class="quiz-opt-letter">A</div>Full authority — she can sign the contract herself</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_1','correct')"><div class="quiz-opt-letter">B</div>She recommends — the CFO approves</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_1','wrong')"><div class="quiz-opt-letter">C</div>She needs board approval for any software purchase</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_1','wrong')"><div class="quiz-opt-letter">D</div>Unknown — it wasn't mentioned on the call</div>
+            </div>
+            <div class="quiz-feedback correct" id="q13_1-correct">✓ Correct. Sarah recommends, but the CFO approves. This means Sarah is your champion — you need to help her build an internal case for the CFO, not just convince Sarah herself.</div>
+            <div class="quiz-feedback wrong" id="q13_1-wrong">The call summary says Sarah recommends and the CFO approves. This is critical qualification data — it tells you Sarah is a champion, not the economic buyer. Your next step must account for this.</div>
+          </div>
+
+          <div class="quiz-block">
+            <div class="quiz-q">How many days per week are Sarah's analysts spending on data reconciliation?</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_2','wrong')"><div class="quiz-opt-letter">A</div>1 day</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_2','wrong')"><div class="quiz-opt-letter">B</div>2 days</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_2','correct')"><div class="quiz-opt-letter">C</div>3 days</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q13_2','wrong')"><div class="quiz-opt-letter">D</div>5 days — the full week</div>
+            </div>
+            <div class="quiz-feedback correct" id="q13_2-correct">✓ 3 days. Captured during the call. This number matters — 3 analyst-days per week is roughly £75k/year in salary cost for manual work. That's your ROI anchor in the proposal.</div>
+            <div class="quiz-feedback wrong" id="q13_2-wrong">The call summary notes 3 days/week. Active listening means retaining specific numbers like this — they're the foundation of your ROI case in the proposal.</div>
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="goStep('t1m3',1)">← Back</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot done"></div><div class="step-dot current"></div><div class="step-dot"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="goStep('t1m3',3)">Next: Call debrief →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: ANNOTATED TRANSCRIPT -->
+      <div class="lesson-panel" id="t1m3-step3">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 3 · Example</div>
+          <h1 class="lesson-title">Listening at level 3 — the debrief</h1>
+          <p class="lesson-intro">Same call with Sarah Patel. This time, look at what a level-3 listener notices that a level-1 listener misses entirely.</p>
+
+          <div class="transcript-wrap">
+            <div class="t-msg buyer">
+              <div class="t-label">Sarah Patel — Finance Manager</div>
+              <div class="t-bubble">We had a £12k discrepancy reach a client last quarter. They paid in the end... but yeah.</div>
+            </div>
+            <div class="t-msg seller">
+              <div class="t-label">AE — Level 1 listener (words only)</div>
+              <div class="t-bubble" style="background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2)">"OK, so invoice errors — we can definitely help with that. Flowline's reconciliation engine..."</div>
+              <div class="t-annotation" style="background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2);color:var(--red)">✗ Heard the problem, immediately pitched. Missed everything else.</div>
+            </div>
+            <div class="t-msg seller">
+              <div class="t-label">AE — Level 3 listener (emotion + meaning)</div>
+              <div class="t-bubble">"They paid in the end — but something in the way you said that tells me it wasn't clean. What happened after?"</div>
+              <div class="t-annotation">✓ Noticed "but yeah" — a pause loaded with emotion. Stayed curious. The real story comes next.</div>
+            </div>
+            <div class="t-msg buyer">
+              <div class="t-label">Sarah</div>
+              <div class="t-bubble">Honestly it was embarrassing. The partner had to personally apologise to their CFO. I'm still living that one down. The Finance Director now double-checks everything I send him before it goes out.</div>
+            </div>
+            <div class="t-msg seller">
+              <div class="t-label">AE</div>
+              <div class="t-bubble">So beyond the invoice — it affected your relationship with the Finance Director internally as well. Is that still an open issue?</div>
+              <div class="t-annotation">✓ Connected the external incident to internal credibility. This is the real pain — not the £12k, but Sarah's standing in the organisation.</div>
+            </div>
+          </div>
+
+          <div class="callout-box" style="margin-top:24px">
+            <strong>The level-3 insight:</strong> The £12k error was not the real pain. The real pain was reputational — inside her own firm. A level-1 listener pitches invoice automation. A level-3 listener helps Sarah fix her credibility problem. Those are very different conversations, and only one of them closes a deal.
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="goStep('t1m3',2)">← Back</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot current"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="completeLesson('t1m3', 150, 'Building Rapport')">Complete lesson →</button>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           LESSON T1M4: Building Rapport Without Being Pushy
+           ═══════════════════════════════════════════════════ -->
+
+      <!-- STEP 1: THEORY -->
+      <div class="lesson-panel" id="t1m4-step1">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 4 · Theory</div>
+          <h1 class="lesson-title">Building Rapport Without Being Pushy</h1>
+          <p class="lesson-intro">Most rapport advice sounds like a charm school syllabus. Remember their kids' names. Mirror their body language. Fake enthusiasm. None of it works on experienced B2B buyers. Real rapport is built on one thing: demonstrating that you're competent and worth their time.</p>
+
+          <div class="content-block">
+            <h3>Rapport is a function of competence, not personality</h3>
+            <p>Think about the best sales conversations you've had — on either side of the table. The rep who earned your trust fastest wasn't the most likeable. They were the most prepared. They asked questions that proved they understood your world. They didn't waste your time.</p>
+            <p>This is what "rapport through competence" means: the buyer relaxes because they can see you know what you're talking about and you're not going to pitch them something irrelevant.</p>
+          </div>
+
+          <div class="content-block">
+            <h3>The 60-second trust signal</h3>
+            <p>The first 60 seconds of a call sets the frame. Most reps open with "So, let me tell you a bit about us..." — which immediately positions them as a salesperson with an agenda. Instead, use a three-part frame-setter:</p>
+          </div>
+
+          <div class="highlight-box">
+            <div class="hl-label">The 3-part opener</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+              <div style="display:flex;gap:12px">
+                <span style="background:var(--indigo-dim);border:1px solid rgba(79,70,229,0.3);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0">1</span>
+                <div><strong style="font-size:13px">Set the agenda:</strong> <span style="font-size:13px;color:var(--text2)">"I'd like to spend about 20 minutes asking you some questions about how you currently manage X. Is that fair?"</span></div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <span style="background:var(--indigo-dim);border:1px solid rgba(79,70,229,0.3);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0">2</span>
+                <div><strong style="font-size:13px">Remove the sales threat:</strong> <span style="font-size:13px;color:var(--text2)">"I'm not going to pitch anything today. If what I hear doesn't fit, I'll tell you that."</span></div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <span style="background:var(--indigo-dim);border:1px solid rgba(79,70,229,0.3);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0">3</span>
+                <div><strong style="font-size:13px">Signal respect for their time:</strong> <span style="font-size:13px;color:var(--text2)">"I've done my homework on your firm — I have a few specific questions I'd like your take on."</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3>Mirror and match — the real version</h3>
+            <p>Mirroring in B2B doesn't mean copying someone's body language. It means calibrating your energy, pace, and language register to match the buyer's.</p>
+            <p>If Marcus Chen is terse and gives short answers, don't compensate with enthusiasm — match his directness. If Sarah Patel is reflective and detailed, slow down and follow her lead. Buyers who feel "got" open up.</p>
+          </div>
+
+          <div class="vs-row">
+            <div class="vs-bad">
+              <div class="vs-label">✗ Fake rapport</div>
+              <div class="vs-text">"I love that — what a great point, Sarah! Totally agree. So our platform basically..."</div>
+            </div>
+            <div class="vs-good">
+              <div class="vs-label">✓ Real rapport</div>
+              <div class="vs-text">"That's useful — the internal credibility piece is often more acute than the financial one. How long has that been the situation?"</div>
+            </div>
+          </div>
+
+          <div class="callout-box" style="margin-top:24px">
+            <strong>What rapport is not:</strong> scripted openers, complimenting their LinkedIn post, asking about their weekend, or over-thanking them for their time. Buyers see through all of it. The fastest way to build trust is to ask one question that proves you did your homework.
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="loadLesson('t1m3')" data-lesson-id="t1m3">← Back to Module 3</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot current"></div><div class="step-dot"></div><div class="step-dot"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="goStep('t1m4',2)">Next: Knowledge check →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: QUIZ -->
+      <div class="lesson-panel" id="t1m4-step2">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 4 · Knowledge Check</div>
+          <h1 class="lesson-title">Rapport in practice</h1>
+          <p class="lesson-intro">Two scenarios. Choose the response that builds genuine rapport.</p>
+
+          <div class="quiz-block">
+            <div class="quiz-q">You're 60 seconds into a cold call with Tom Briggs (Practice Manager, law firm). What's the best opening?</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_1','wrong')"><div class="quiz-opt-letter">A</div>"Hi Tom, I'll be quick — we help law firms like yours reduce admin time by 40%..."</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_1','wrong')"><div class="quiz-opt-letter">B</div>"Hi Tom! I saw on LinkedIn you've been at the firm 5 years — that's great. How's your week going?"</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_1','correct')"><div class="quiz-opt-letter">C</div>"Tom, I'm not here to pitch anything today. I have a couple of questions about how your firm manages time tracking — 15 minutes, and if it's not relevant, I'll tell you. Fair?"</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_1','wrong')"><div class="quiz-opt-letter">D</div>"Hi Tom, I've been following your firm for a while and I think there's a real opportunity here..."</div>
+            </div>
+            <div class="quiz-feedback correct" id="q14_1-correct">✓ This is the 60-second trust signal in action: removes the sales threat, sets a time boundary, and signals competence by naming a specific topic. Tom relaxes because you're not pitching.</div>
+            <div class="quiz-feedback wrong" id="q14_1-wrong">Option C is the correct answer. It removes the sales threat ("not here to pitch"), sets a time boundary (15 min), and names a specific topic. That combination tells Tom you're competent and respectful of his time.</div>
+          </div>
+
+          <div class="quiz-block">
+            <div class="quiz-q">Marcus Chen gives short, clipped answers on the first call. What's the right response?</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_2','wrong')"><div class="quiz-opt-letter">A</div>Increase your energy to compensate — enthusiasm is contagious</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_2','correct')"><div class="quiz-opt-letter">B</div>Match his directness — ask precise questions, keep your responses short, don't fill silences</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_2','wrong')"><div class="quiz-opt-letter">C</div>Ask him if he'd prefer to reschedule for when he has more time</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_2','wrong')"><div class="quiz-opt-letter">D</div>Tell him upfront that you'll need 30 minutes to cover everything properly</div>
+            </div>
+            <div class="quiz-feedback correct" id="q14_2-correct">✓ Mirror and match. Marcus is terse — a sign he's guarded or busy. Matching his energy signals respect. When you ask tight, precise questions and don't ramble, he'll begin to open up on his own terms.</div>
+            <div class="quiz-feedback wrong" id="q14_2-wrong">Option B: match his energy. Clipped answers are a signal — he's busy, guarded, or testing you. Increasing enthusiasm or asking for a reschedule sends the wrong signal. Mirror his directness and let him warm up.</div>
+          </div>
+
+          <div class="quiz-block">
+            <div class="quiz-q">Which of the following best describes "rapport through competence"?</div>
+            <div class="quiz-options">
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_3','wrong')"><div class="quiz-opt-letter">A</div>Using shared interests and personal connection to make the buyer like you</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_3','wrong')"><div class="quiz-opt-letter">B</div>Being highly knowledgeable about your product so you can answer every question</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_3','correct')"><div class="quiz-opt-letter">C</div>Earning trust by asking questions that prove you understand the buyer's world — before pitching anything</div>
+              <div class="quiz-opt" onclick="answerQuiz(this,'q14_3','wrong')"><div class="quiz-opt-letter">D</div>Following up quickly after every call to show you're reliable</div>
+            </div>
+            <div class="quiz-feedback correct" id="q14_3-correct">✓ Rapport through competence means proving you understand their world — through questions, not claims. When Sarah or Marcus realises you know exactly what professional services firms struggle with, trust follows automatically.</div>
+            <div class="quiz-feedback wrong" id="q14_3-wrong">Option C. Competence-based rapport comes from asking questions that prove you understand the buyer's world before pitching. Product knowledge (B) matters later — but in discovery, asking the right questions is the trust signal.</div>
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="goStep('t1m4',1)">← Back</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot done"></div><div class="step-dot current"></div><div class="step-dot"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="goStep('t1m4',3)">Next: See it in action →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: ANNOTATED TRANSCRIPT -->
+      <div class="lesson-panel" id="t1m4-step3">
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Track 1 · Module 4 · Example</div>
+          <h1 class="lesson-title">The 60-second trust signal — with Tom Briggs</h1>
+          <p class="lesson-intro">Tom Briggs is Practice Manager at an 80-person law firm. He's been trying to get the firm off spreadsheets for two years. He took this call because a colleague forwarded an email. Watch how the AE earns trust before asking a single discovery question.</p>
+
+          <div class="transcript-wrap">
+            <div class="t-msg seller">
+              <div class="t-label">AE — You (Flowline)</div>
+              <div class="t-bubble">Tom, thanks for taking the call. I'll be upfront — I'm not here to pitch anything today. I'd like to spend about 15 minutes asking you some questions about how your firm handles time recording and billing. If it's not relevant, I'll tell you and we'll both move on. Is that fair?</div>
+              <div class="t-annotation">✓ Frame-set: no pitch, time boundary, specific topic, buyer's permission. Tom is now curious, not defensive.</div>
+            </div>
+            <div class="t-msg buyer">
+              <div class="t-label">Tom Briggs — Practice Manager</div>
+              <div class="t-bubble">Yeah, sure. I only have about 20 minutes though.</div>
+            </div>
+            <div class="t-msg seller">
+              <div class="t-label">AE</div>
+              <div class="t-bubble">I'll use 15, then. You're a Practice Manager — so I'm guessing you're the person who has to make the operational side actually work, while fee earners focus on billable work. Where's the biggest friction point right now in terms of the billing cycle?</div>
+              <div class="t-annotation">✓ Mirrors his energy (no small talk). Names his role accurately — proves homework done. First question is about his pain, not Flowline.</div>
+            </div>
+            <div class="t-msg buyer">
+              <div class="t-label">Tom</div>
+              <div class="t-bubble">Honestly? Time recording. Half our solicitors are logging maybe 80% of their actual time. I catch it when we reconcile at month end and by then the matter's been invoiced.</div>
+            </div>
+            <div class="t-msg seller">
+              <div class="t-label">AE</div>
+              <div class="t-bubble">80% time capture — that's actually a specific number. Have you ever worked out roughly what that costs the firm in a year?</div>
+              <div class="t-annotation">✓ Anchors the number. Tom is now doing the maths — not because the AE told him to, but because the question made it real.</div>
+            </div>
+            <div class="t-msg buyer">
+              <div class="t-label">Tom</div>
+              <div class="t-bubble">...Not precisely. But it can't be small. We've got 50 fee earners billing on average £1,200 a day. If they're each missing 20% of a typical day... yeah, that's significant.</div>
+            </div>
+            <div class="t-msg seller">
+              <div class="t-label">AE</div>
+              <div class="t-bubble">You just described roughly £3 million in potentially unlogged billable time annually. Our data across similar firms suggests about £28k is recoverable in the first year with the right tooling. I want to show you how that works — can we put 30 minutes in the diary next week?</div>
+              <div class="t-annotation">✓ Now the AE speaks. Quantified the implication using Tom's own numbers. Asks for next step naturally — the question has already answered itself.</div>
+            </div>
+          </div>
+
+          <div class="callout-box" style="margin-top:24px">
+            <strong>Track 1 complete:</strong> You've built the foundation — consultative mindset, SPIN questioning, active listening, and rapport through competence. Every lesson from here applies these skills inside real deal scenarios.
+          </div>
+        </div>
+        <div class="lesson-footer">
+          <button class="btn-lesson btn-back-lesson" onclick="goStep('t1m4',2)">← Back</button>
+          <div class="lesson-step-indicator">
+            <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot current"></div>
+          </div>
+          <button class="btn-lesson btn-next" onclick="completeLesson('t1m4', 150, 'Prospecting & ICP-Fit Outreach')">Complete Track 1 →</button>
+        </div>
+      </div>
+
       <!-- COMPLETION SCREEN -->
       <div class="completion-screen" id="completion-screen" style="display:none">
         <div class="completion-icon">🎉</div>
@@ -944,7 +1559,7 @@ footer p{font-size:13px;color:var(--text3)}
           <div class="xp-earned-num" id="xp-earned-num">+150</div>
           <div class="xp-earned-label">XP earned<br><span style="color:var(--text3)">Keep going to level up</span></div>
         </div>
-        <div class="next-lesson-card" id="next-lesson-card" onclick="loadLesson('t1m2')">
+        <div class="next-lesson-card" id="next-lesson-card" onclick="loadLesson('t1m2')" data-lesson-id="t1m2">
           <div class="next-card-label">Up next</div>
           <div class="next-card-title" id="next-lesson-title">Discovery & SPIN Selling →</div>
         </div>
@@ -1022,19 +1637,31 @@ let currentStep = 1;
 let totalXP = 0;
 
 function loadLesson(id) {
-  // For now all lessons go to t1m1 — future lessons would load their panels
   currentLesson = id;
   currentStep = 1;
   document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
-  event?.currentTarget?.classList.add('active');
+  // Mark the correct sidebar item active
+  document.querySelectorAll('.lesson-item').forEach(el => {
+    if (el.dataset.lessonId === id) el.classList.add('active');
+  });
   document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('completion-screen').style.display = 'none';
+  const cs = document.getElementById('coming-soon');
+  if (cs) cs.style.display = 'none';
+  // Update breadcrumb
+  const meta = LESSON_META[id];
+  if (meta) {
+    document.getElementById('current-lesson-name').textContent = meta.name;
+    document.querySelector('.lesson-breadcrumb').innerHTML = meta.track + ' › <span id="current-lesson-name">' + meta.name + '</span>';
+  }
   const panel = document.getElementById(id + '-step1');
   if (panel) {
     panel.classList.add('active');
-    updateStepIndicator(1, 3);
+    const steps = document.querySelectorAll('[id^="'+id+'-step"]').length;
+    updateStepIndicator(1, steps);
+    // Init roleplay if applicable
+    if (id === 't1m2') setTimeout(() => initRoleplay('t1m2'), 50);
   } else {
-    // Placeholder for lessons not yet built
     showComingSoon(id);
   }
 }
@@ -1052,7 +1679,7 @@ function showComingSoon(id) {
     placeholder.innerHTML = `<div style="font-size:56px;margin-bottom:24px">🔒</div>
       <h2 class="completion-title">Coming soon</h2>
       <p class="completion-sub">This module is in development. Complete Track 1 first and check back soon.</p>
-      <button class="btn-ghost" onclick="loadLesson('t1m1')">Back to Module 1</button>`;
+      <button class="btn-ghost" onclick="loadLesson('t1m1')" data-lesson-id="t1m1">Back to Module 1</button>`;
     el.appendChild(placeholder);
   } else {
     placeholder.style.display = 'flex';
@@ -1068,6 +1695,8 @@ function goStep(lesson, step) {
   if (panel) { panel.classList.add('active'); currentStep = step; }
   const steps = document.querySelectorAll('[id^="'+lesson+'-step"]').length;
   updateStepIndicator(step, steps);
+  // Init roleplay panels
+  if (lesson === 't1m2' && step === 3) setTimeout(() => initRoleplay('t1m2'), 50);
 }
 
 function updateStepIndicator(step, total) {
@@ -1081,13 +1710,31 @@ function completeLesson(lessonId, xp, nextTitle) {
   document.getElementById('xp-count').textContent = totalXP;
   document.getElementById('xp-earned-num').textContent = '+' + xp;
   document.getElementById('next-lesson-title').textContent = nextTitle + ' →';
+  // Set next lesson card onclick from meta
+  const meta = LESSON_META[lessonId];
+  const nextCard = document.getElementById('next-lesson-card');
+  if (meta && nextCard) nextCard.onclick = () => { loadLesson(meta.next); showView('app'); };
+  // Completion sub text
+  const subs = {
+    't1m1': "You've finished The Consultative Mindset. The most important shift in sales isn't a technique — it's the decision to listen before you speak.",
+    't1m2': "SPIN is now in your toolkit. Questions are your product. The best AEs don't pitch — they probe.",
+    't1m3': "Active listening is a competitive advantage. Most reps hear surface. You now listen for meaning.",
+    't1m4': "Track 1 complete. You have the foundation — mindset, questions, listening, and trust. Everything from here builds on this."
+  };
+  const subEl = document.getElementById('completion-sub');
+  if (subEl && subs[lessonId]) subEl.textContent = subs[lessonId];
   document.getElementById('completion-screen').style.display = 'flex';
   // Mark lesson done in sidebar
-  document.querySelector('.lesson-item.active')?.classList.add('completed');
-  document.querySelector('.lesson-item.active .lesson-dot')?.style.setProperty('background','var(--emerald)');
+  const activeItem = document.querySelector('.lesson-item.active');
+  if (activeItem) {
+    activeItem.classList.add('completed');
+    const dot = activeItem.querySelector('.lesson-dot');
+    if (dot) dot.style.background = 'var(--emerald)';
+  }
   document.getElementById('step-fill').style.width = '100%';
   document.getElementById('step-label').textContent = 'Complete ✓';
   document.querySelector('.user-xp').textContent = '⭐ ' + totalXP + ' XP earned';
+  saveProgress();
 }
 
 // ── QUIZ LOGIC ──
@@ -1138,6 +1785,297 @@ function checkFitb() {
     fb.textContent = 'Not quite — the consultative reframe puts the focus on their process and their pain, using open language that invites them to talk.';
   }
 }
+
+// ── LESSON METADATA ──
+const LESSON_META = {
+  't1m1': {name:'The Consultative Mindset',    track:'Track 1 — Foundations', steps:3, xp:150, next:'t1m2', nextTitle:'Discovery & SPIN Selling'},
+  't1m2': {name:'Discovery & SPIN Selling',    track:'Track 1 — Foundations', steps:3, xp:200, next:'t1m3', nextTitle:'Active Listening'},
+  't1m3': {name:'Active Listening',            track:'Track 1 — Foundations', steps:3, xp:150, next:'t1m4', nextTitle:'Building Rapport'},
+  't1m4': {name:'Building Rapport',            track:'Track 1 — Foundations', steps:3, xp:150, next:'t2m1', nextTitle:'Prospecting & ICP-Fit Outreach'},
+};
+
+// ── FILL-THE-BLANK MODULE 1.2 ──
+function checkFitb12() {
+  if (!blanks['b12_1'] || !blanks['b12_2']) return;
+  const c1 = blanks['b12_1'] === 'breaks down';
+  const c2 = blanks['b12_2'] === 'knock-on effect';
+  const i1 = document.getElementById('b12_1');
+  const i2 = document.getElementById('b12_2');
+  const fb = document.getElementById('b12-feedback');
+  i1.classList.toggle('correct',c1); i1.classList.toggle('wrong',!c1);
+  i2.classList.toggle('correct',c2); i2.classList.toggle('wrong',!c2);
+  if (c1 && c2) {
+    fb.className='quiz-feedback correct show';
+    fb.textContent='✓ "When that process breaks down, what's the knock-on effect for your planning that week?" — this is a textbook Implication question. It connects the problem to downstream consequences without leading the buyer to a solution.';
+  } else {
+    fb.className='quiz-feedback wrong show';
+    fb.textContent='Not quite. An Implication question explores what goes wrong when the problem occurs — not when things work well. The "knock-on effect" framing keeps it open and avoids leading the buyer to your solution prematurely.';
+  }
+}
+
+// ── FILL-THE-BLANK MODULE 1.3 ──
+function checkFitb13() {
+  if (!blanks['b13_1'] || !blanks['b13_2'] || !blanks['b13_3']) return;
+  const c1 = blanks['b13_1'] === 'Great';
+  const c2 = blanks['b13_2'] === 'reconciling';
+  const c3 = blanks['b13_3'] === '5';
+  const i1=document.getElementById('b13_1'), i2=document.getElementById('b13_2'), i3=document.getElementById('b13_3');
+  const fb = document.getElementById('b13-feedback');
+  i1.classList.toggle('correct',c1); i1.classList.toggle('wrong',!c1);
+  i2.classList.toggle('correct',c2); i2.classList.toggle('wrong',!c2);
+  i3.classList.toggle('correct',c3); i3.classList.toggle('wrong',!c3);
+  if (c1 && c2 && c3) {
+    fb.className='quiz-feedback correct show';
+    fb.textContent='✓ Perfect. The email uses her language ("reconciling" not "processing"), the correct number (5 days), and a warm but professional opener. Reflecting facts accurately signals you were actually listening.';
+  } else {
+    fb.className='quiz-feedback wrong show';
+    fb.textContent='Not quite. Use the exact numbers and language from the call — "reconciling" was how Sarah described it, and 5 days is what she said. Accuracy is the proof of listening.';
+  }
+}
+
+// ── OVERRIDE selectChip to handle multi-module blanks ──
+const _origSelectChip = selectChip;
+function selectChip(chip, blankId, value) {
+  const input = document.getElementById(blankId);
+  if (blanks[blankId]) {
+    document.querySelectorAll('.fitb-chip').forEach(c => {
+      if (c.dataset.value === blanks[blankId] && c.dataset.blank === blankId) c.classList.remove('used');
+    });
+  }
+  chip.dataset.blank = blankId;
+  chip.dataset.value = value;
+  chip.classList.add('used');
+  input.value = value;
+  blanks[blankId] = value;
+  // Route to correct checker
+  if (blankId.startsWith('b12_')) checkFitb12();
+  else if (blankId.startsWith('b13_')) checkFitb13();
+  else checkFitb();
+}
+
+// ── AI ROLEPLAY ──
+const MARCUS_SYSTEM = `You are Marcus Chen, Head of Operations at FreightCore, a 300-person logistics firm. You are playing the role of a slightly guarded but realistic B2B buyer.
+
+Character: Busy and sceptical but not hostile. Real pain: scheduling in spreadsheets, shift changes create chaos, 2 hours/day on manual coordination, a £40k delivery failure traced to a scheduling error last year. You don't volunteer pain easily — the seller must ask the right questions.
+
+Respond naturally. Short when guarded, more open when asked good open questions. Closed questions get short answers. After EACH seller message, respond in character (2-4 sentences), then add:
+
+---COACH---
+SCORES: [one or more of: "✓ Good open question" / "⚠ Slightly leading" / "✗ Missed implication" / "✓ Strong SPIN" / "⚠ Too product-focused" / "✓ Good rapport"]
+WHAT WORKED: [1 sentence]
+IMPROVE: [1 specific tip for their next message]
+SPIN STAGE: [Situation / Problem / Implication / Need-Payoff / Too early to tell]
+---END---`;
+
+const chatHistory = {};
+
+function initRoleplay(lessonId) {
+  if (!chatHistory[lessonId]) chatHistory[lessonId] = [];
+  const msgs = document.getElementById(lessonId+'-messages');
+  if (!msgs) return;
+  if (msgs.children.length > 0) return; // already initialised
+
+  // Check API key
+  const apiKey = localStorage.getItem('saleslab_api_key');
+  const banner = document.getElementById(lessonId+'-api-banner');
+  if (!apiKey) {
+    if (banner) banner.style.display = 'block';
+    const sendBtn = document.getElementById(lessonId+'-send');
+    if (sendBtn) sendBtn.disabled = true;
+    return;
+  }
+
+  // Opening buyer message
+  const opening = "Yeah, hi. I only have about 20 minutes — one of the partners forwarded your email. What's this about?";
+  chatHistory[lessonId].push({role:'assistant', content: opening + '\n\n---COACH---\nSCORES: N/A\nWHAT WORKED: N/A\nIMPROVE: Marcus is guarded. Start with a frame-set — tell him you\'re not pitching, set a time boundary, and ask one specific question about his operations.\nSPIN STAGE: Too early to tell\n---END---'});
+  renderBuyerMessage(lessonId, opening, {scores:[], worked:'', improve:'Marcus is guarded. Start with a frame-set — tell him you\'re not pitching, set a time boundary, and ask one specific question about his operations.', stage:'Too early to tell'});
+}
+
+function renderBuyerMessage(lessonId, text, coaching) {
+  const container = document.getElementById(lessonId+'-messages');
+  if (!container) return;
+
+  // Buyer bubble
+  const msg = document.createElement('div');
+  msg.className = 't-msg buyer';
+  msg.innerHTML = '<div class="t-label">Marcus Chen — Head of Operations</div><div class="t-bubble"></div>';
+  msg.querySelector('.t-bubble').textContent = text;
+  container.appendChild(msg);
+
+  // Coaching block
+  if (coaching && (coaching.scores.length || coaching.worked || coaching.improve)) {
+    const block = document.createElement('div');
+    block.className = 'coaching-block';
+    let html = '<div class="coaching-title">🎯 AI Coach</div>';
+    if (coaching.scores.length) {
+      html += '<div class="score-pills">';
+      coaching.scores.forEach(s => {
+        const cls = s.startsWith('✓') ? 'pill-good' : s.startsWith('✗') ? 'pill-miss' : 'pill-ok';
+        html += `<span class="pill ${cls}">${s}</span>`;
+      });
+      html += '</div>';
+    }
+    if (coaching.worked) html += `<div class="coach-row"><span class="coach-label">WORKED</span><span>${coaching.worked}</span></div>`;
+    if (coaching.improve) html += `<div class="coach-row"><span class="coach-label">IMPROVE</span><span>${coaching.improve}</span></div>`;
+    if (coaching.stage && coaching.stage !== 'Too early to tell') html += `<div class="coach-row"><span class="coach-label">STAGE</span><span style="color:var(--indigo-light)">${coaching.stage}</span></div>`;
+    block.innerHTML = html;
+    container.appendChild(block);
+  }
+  container.scrollTop = container.scrollHeight;
+}
+
+function parseCoaching(raw) {
+  const coachMatch = raw.match(/---COACH---([\s\S]*?)---END---/);
+  const buyerText = raw.replace(/---COACH---[\s\S]*?---END---/,'').trim();
+  const coaching = {scores:[], worked:'', improve:'', stage:''};
+  if (coachMatch) {
+    const block = coachMatch[1];
+    const scoresMatch = block.match(/SCORES?:\s*(.+)/i);
+    if (scoresMatch) {
+      coaching.scores = scoresMatch[1].split(/[|,]/).map(s=>s.trim()).filter(s=>s && s!=='N/A');
+    }
+    const workedMatch = block.match(/WHAT WORKED:\s*(.+)/i);
+    if (workedMatch) coaching.worked = workedMatch[1].trim() === 'N/A' ? '' : workedMatch[1].trim();
+    const improveMatch = block.match(/IMPROVE:\s*(.+)/i);
+    if (improveMatch) coaching.improve = improveMatch[1].trim();
+    const stageMatch = block.match(/SPIN STAGE:\s*(.+)/i);
+    if (stageMatch) coaching.stage = stageMatch[1].trim();
+  }
+  return {buyerText, coaching};
+}
+
+async function sendRoleplay(lessonId) {
+  const apiKey = localStorage.getItem('saleslab_api_key');
+  if (!apiKey) { alert('Please enter your API key first.'); return; }
+  const input = document.getElementById(lessonId+'-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const sendBtn = document.getElementById(lessonId+'-send');
+
+  // Append user message to UI
+  const container = document.getElementById(lessonId+'-messages');
+  const userMsg = document.createElement('div');
+  userMsg.className = 't-msg seller';
+  userMsg.innerHTML = '<div class="t-label">You (Flowline AE)</div><div class="t-bubble"></div>';
+  userMsg.querySelector('.t-bubble').textContent = text;
+  container.appendChild(userMsg);
+  input.value = '';
+  input.style.height = '42px';
+
+  // Typing indicator
+  const typingEl = document.createElement('div');
+  typingEl.className = 't-msg buyer';
+  typingEl.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  container.appendChild(typingEl);
+  container.scrollTop = container.scrollHeight;
+  sendBtn.disabled = true;
+
+  // Build history for API
+  if (!chatHistory[lessonId]) chatHistory[lessonId] = [];
+  chatHistory[lessonId].push({role:'user', content: text});
+
+  // Messages array: strip coaching from assistant messages for API context
+  const apiMessages = chatHistory[lessonId].map(m => ({
+    role: m.role,
+    content: m.role === 'assistant' ? m.content.replace(/---COACH---[\s\S]*?---END---/,'').trim() : m.content
+  }));
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body: JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:600,
+        system: MARCUS_SYSTEM,
+        messages: apiMessages
+      })
+    });
+    const data = await res.json();
+    container.removeChild(typingEl);
+    if (data.error) { throw new Error(data.error.message); }
+    const rawResponse = data.content[0].text;
+    chatHistory[lessonId].push({role:'assistant', content: rawResponse});
+    const {buyerText, coaching} = parseCoaching(rawResponse);
+    renderBuyerMessage(lessonId, buyerText, coaching);
+  } catch(err) {
+    container.removeChild(typingEl);
+    const errMsg = document.createElement('div');
+    errMsg.style.cssText = 'font-size:12px;color:var(--red);padding:8px 12px;background:rgba(239,68,68,0.06);border-radius:8px;';
+    errMsg.textContent = 'Error: ' + err.message + ' — check your API key in the banner below.';
+    container.appendChild(errMsg);
+    const banner = document.getElementById(lessonId+'-api-banner');
+    if (banner) banner.style.display = 'block';
+  } finally {
+    sendBtn.disabled = false;
+    container.scrollTop = container.scrollHeight;
+  }
+}
+
+function handleChatKey(e, lessonId) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendRoleplay(lessonId); }
+  // auto-resize textarea
+  const ta = e.target;
+  ta.style.height = '42px';
+  ta.style.height = Math.min(ta.scrollHeight, 140) + 'px';
+}
+
+function resetRoleplay(lessonId) {
+  chatHistory[lessonId] = [];
+  const container = document.getElementById(lessonId+'-messages');
+  if (container) container.innerHTML = '';
+  initRoleplay(lessonId);
+}
+
+function saveApiKey(lessonId) {
+  const input = document.getElementById('api-key-field');
+  const key = input.value.trim();
+  if (!key) return;
+  localStorage.setItem('saleslab_api_key', key);
+  const banner = document.getElementById(lessonId+'-api-banner');
+  if (banner) banner.style.display = 'none';
+  const sendBtn = document.getElementById(lessonId+'-send');
+  if (sendBtn) sendBtn.disabled = false;
+  initRoleplay(lessonId);
+}
+
+// ── LOCALSTORAGE PERSISTENCE ──
+function saveProgress() {
+  localStorage.setItem('saleslab_xp', totalXP);
+  const completed = [];
+  document.querySelectorAll('.lesson-item.completed').forEach(el => {
+    completed.push(el.dataset.lessonId || '');
+  });
+  localStorage.setItem('saleslab_completed', JSON.stringify(completed));
+}
+
+function loadProgress() {
+  const savedXP = parseInt(localStorage.getItem('saleslab_xp') || '0');
+  if (savedXP > 0) {
+    totalXP = savedXP;
+    const xpEl = document.getElementById('xp-count');
+    if (xpEl) xpEl.textContent = totalXP;
+    const userXpEl = document.querySelector('.user-xp');
+    if (userXpEl) userXpEl.textContent = '⭐ ' + totalXP + ' XP earned';
+  }
+  const completed = JSON.parse(localStorage.getItem('saleslab_completed') || '[]');
+  completed.forEach(id => {
+    const item = document.querySelector('.lesson-item[data-lesson-id="'+id+'"]');
+    if (item) {
+      item.classList.add('completed');
+      const dot = item.querySelector('.lesson-dot');
+      if (dot) dot.style.background = 'var(--emerald)';
+    }
+  });
+}
+
+// Load saved progress on startup
+loadProgress();
 </script>
 
 </body>
