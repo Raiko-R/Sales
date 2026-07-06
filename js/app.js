@@ -4,6 +4,14 @@
 
 'use strict';
 
+// ── Merge course data ──────────────────────────────────────────
+// Combines base courses (courses.js) with Phase 2 courses (new_courses.js)
+if (typeof NEW_COURSES_DATA !== 'undefined' && Array.isArray(NEW_COURSES_DATA)) {
+  NEW_COURSES_DATA.forEach(nc => {
+    if (!COURSES_DATA.find(c => c.id === nc.id)) COURSES_DATA.push(nc);
+  });
+}
+
 // ── State ──────────────────────────────────────────────────────
 const STATE = {
   currentPage: 'home',
@@ -389,22 +397,63 @@ function renderTheoryStep(course, module) {
     </div>
   `;
 
-  // Render sections in the right order:
-  // 1. Terminology (always first if present)
+  // Render sections in order of appearance (preserving authored sequence)
+  // Fallback order for section types that appear once:
+  // 0. Learning objectives (always first if present)
+  // 1. Terminology
   // 2. Theory paragraphs
-  // 3. Career path (special)
-  // 4. Frameworks
-  // 5. Copy templates
-  // 6. Expert insights
-  // 7. Common mistakes
+  // 3. Career path
+  // 4. Frameworks, templates, insights, warnings, case_study, recruiter_view, manager_insight, common_mistakes, reflection_questions
 
-  const termSection = module.sections.find(s => s.type === 'terminology');
-  const theorySection = module.sections.find(s => s.type === 'theory');
-  const careerSection = module.sections.find(s => s.type === 'career_path');
-  const frameworks = module.sections.filter(s => s.type === 'framework');
-  const templates = module.sections.filter(s => s.type === 'template');
-  const insights = module.sections.filter(s => s.type === 'insight');
-  const warnings = module.sections.filter(s => s.type === 'warning');
+  // Merge in enrichments if available (from ENRICHMENTS data file)
+  let sections = [...(module.sections || [])];
+  if (typeof ENRICHMENTS !== 'undefined' && ENRICHMENTS[module.id]) {
+    const enrich = ENRICHMENTS[module.id];
+    if (enrich.learning_objectives && !sections.find(s => s.type === 'learning_objectives')) {
+      sections.unshift({ type: 'learning_objectives', objectives: enrich.learning_objectives });
+    }
+    if (enrich.case_study && !sections.find(s => s.type === 'case_study')) {
+      sections.push({ type: 'case_study', title: enrich.case_study.title, story: enrich.case_study.story });
+    }
+    if (enrich.recruiter_view && !sections.find(s => s.type === 'recruiter_view')) {
+      sections.push({ type: 'recruiter_view', content: enrich.recruiter_view });
+    }
+    if (enrich.manager_insight && !sections.find(s => s.type === 'manager_insight')) {
+      sections.push({ type: 'manager_insight', content: enrich.manager_insight });
+    }
+    if (enrich.common_mistakes && !sections.find(s => s.type === 'common_mistakes')) {
+      sections.push({ type: 'common_mistakes', mistakes: enrich.common_mistakes });
+    }
+    if (enrich.reflection_questions && !sections.find(s => s.type === 'reflection_questions')) {
+      sections.push({ type: 'reflection_questions', questions: enrich.reflection_questions });
+    }
+  }
+
+  const termSection       = sections.find(s => s.type === 'terminology');
+  const loSection         = sections.find(s => s.type === 'learning_objectives');
+  const theorySection     = sections.find(s => s.type === 'theory');
+  const careerSection     = sections.find(s => s.type === 'career_path');
+  const frameworks        = sections.filter(s => s.type === 'framework');
+  const templates         = sections.filter(s => s.type === 'template');
+  const insights          = sections.filter(s => s.type === 'insight');
+  const warnings          = sections.filter(s => s.type === 'warning');
+  const caseStudies       = sections.filter(s => s.type === 'case_study');
+  const recruiterViews    = sections.filter(s => s.type === 'recruiter_view');
+  const managerInsights   = sections.filter(s => s.type === 'manager_insight');
+  const commonMistakes    = sections.filter(s => s.type === 'common_mistakes');
+  const reflections       = sections.filter(s => s.type === 'reflection_questions');
+
+  // Learning Objectives (always first)
+  if (loSection && loSection.objectives && loSection.objectives.length) {
+    html += `
+      <div class="learning-objectives">
+        <div class="lo-header">🎯 Learning Objectives</div>
+        <ul class="lo-list">
+          ${loSection.objectives.map(o => `<li>${escHtml(o)}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  }
 
   // Terminology
   if (termSection && termSection.terms && termSection.terms.length) {
@@ -464,12 +513,75 @@ function renderTheoryStep(course, module) {
     `;
   });
 
-  // Warnings
+  // Warnings (legacy)
   warnings.forEach(w => {
     html += `
       <div class="callout callout-warn">
-        <div class="callout-header">⚠️ Common Mistake</div>
+        <div class="callout-header">⚠️ Watch Out</div>
         <div class="callout-body"><p>${escHtml(w.content)}</p></div>
+      </div>
+    `;
+  });
+
+  // Case Studies
+  caseStudies.forEach(cs => {
+    html += `
+      <div class="case-study-box">
+        <div class="cs-header">🏢 Case Study</div>
+        <div class="cs-title">${escHtml(cs.title || '')}</div>
+        <div class="cs-story">${escHtml(cs.story || '')}</div>
+      </div>
+    `;
+  });
+
+  // Recruiter's View
+  recruiterViews.forEach(rv => {
+    html += `
+      <div class="recruiter-view">
+        <div class="rv-header">👤 Recruiter's View</div>
+        <div class="rv-body">${escHtml(rv.content || '')}</div>
+      </div>
+    `;
+  });
+
+  // Manager Insight
+  managerInsights.forEach(mi => {
+    html += `
+      <div class="manager-insight">
+        <div class="mi-header">📊 Sales Manager Insight</div>
+        <div class="mi-body">${escHtml(mi.content || '')}</div>
+      </div>
+    `;
+  });
+
+  // Common Mistakes
+  commonMistakes.forEach(cm => {
+    if (!cm.mistakes || !cm.mistakes.length) return;
+    html += `
+      <div class="common-mistakes">
+        <div class="cm-header">⚡ Top Common Mistakes</div>
+        <div class="cm-list">
+          ${cm.mistakes.map(m => `
+            <div class="cm-item">
+              <div class="cm-title">${escHtml(m.title || m.name || '')}</div>
+              <div class="cm-why">Why it happens: ${escHtml(m.why || '')}</div>
+              <div class="cm-fix">How to avoid it: ${escHtml(m.fix || '')}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  // Reflection Questions
+  reflections.forEach(rq => {
+    if (!rq.questions || !rq.questions.length) return;
+    html += `
+      <div class="reflection-questions">
+        <div class="rq-header">🔍 Reflection Questions</div>
+        <ol class="rq-list">
+          ${rq.questions.map(q => `<li>${escHtml(q)}</li>`).join('')}
+        </ol>
       </div>
     `;
   });
@@ -908,19 +1020,51 @@ function renderProfile() {
 // ═══════════════════════════════════════════════════════════════
 function init() {
   // Handle hash routing for GitHub Pages
-  const hash = window.location.hash.replace('#', '').trim();
-  const parts = hash.split('/');
+  const hash = window.location.hash || '';
+  const parts = hash.replace(/^#/, '').split('/');
   const page = parts[0] || 'home';
 
+  // Initial navigation
   if (page === 'lesson' && parts[1] && parts[2]) {
-    navigate('lesson', { course: parts[1], module: parts[2] });
-  } else if (['home','library','lesson','jobs','glossary','profile'].includes(page)) {
+    STATE.currentCourseId = parts[1];
+    STATE.currentModuleId = parts[2];
+    navigate('lesson');
+  } else if (['home','library','jobs','glossary','profile'].includes(page)) {
     navigate(page);
   } else {
     navigate('home');
   }
 
-  updateNavXP();
+  // Listen for hash changes (back/forward)
+  window.addEventListener('hashchange', () => {
+    const h2 = window.location.hash.replace(/^#/, '');
+    const p2 = h2.split('/');
+    const pg = p2[0] || 'home';
+    if (pg === 'lesson' && p2[1] && p2[2]) {
+      STATE.currentCourseId = p2[1];
+      STATE.currentModuleId = p2[2];
+      navigate('lesson');
+    } else if (['home','library','jobs','glossary','profile'].includes(pg)) {
+      navigate(pg);
+    } else {
+      navigate('home');
+    }
+  });
+
+  // Global click handler (event delegation)
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-page]');
+    if (!el) return;
+    const pg = el.dataset.page;
+    const courseId = el.dataset.course;
+    const moduleId = el.dataset.module;
+    if (pg === 'lesson' && courseId && moduleId) {
+      STATE.currentCourseId = courseId;
+      STATE.currentModuleId = moduleId;
+    }
+    navigate(pg);
+  });
 }
 
+// ── Boot ───────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', init);
