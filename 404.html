@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SalesLab University</title>
+  <script>
+    // GitHub Pages SPA redirect: preserve hash routing
+    var seg = window.location.pathname.replace('/Sales','');
+    var hash = window.location.hash;
+    var redirect = window.location.origin + '/Sales/' + (hash || '');
+    window.location.replace(redirect);
+  </script>
+</head>
+<body>Redirecting...</body>
+</html>
