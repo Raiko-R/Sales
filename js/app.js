@@ -1019,51 +1019,18 @@ function renderProfile() {
 // INIT
 // ═══════════════════════════════════════════════════════════════
 function init() {
-  // Handle hash routing for GitHub Pages
+  // Handle hash routing for GitHub Pages — initial page load only
   const hash = window.location.hash || '';
   const parts = hash.replace(/^#/, '').split('/');
   const page = parts[0] || 'home';
 
-  // Initial navigation
   if (page === 'lesson' && parts[1] && parts[2]) {
-    STATE.currentCourseId = parts[1];
-    STATE.currentModuleId = parts[2];
-    navigate('lesson');
+    navigate('lesson', { course: parts[1], module: parts[2] });
   } else if (['home','library','jobs','glossary','profile'].includes(page)) {
     navigate(page);
   } else {
     navigate('home');
   }
-
-  // Listen for hash changes (back/forward)
-  window.addEventListener('hashchange', () => {
-    const h2 = window.location.hash.replace(/^#/, '');
-    const p2 = h2.split('/');
-    const pg = p2[0] || 'home';
-    if (pg === 'lesson' && p2[1] && p2[2]) {
-      STATE.currentCourseId = p2[1];
-      STATE.currentModuleId = p2[2];
-      navigate('lesson');
-    } else if (['home','library','jobs','glossary','profile'].includes(pg)) {
-      navigate(pg);
-    } else {
-      navigate('home');
-    }
-  });
-
-  // Global click handler (event delegation)
-  document.addEventListener('click', e => {
-    const el = e.target.closest('[data-page]');
-    if (!el) return;
-    const pg = el.dataset.page;
-    const courseId = el.dataset.course;
-    const moduleId = el.dataset.module;
-    if (pg === 'lesson' && courseId && moduleId) {
-      STATE.currentCourseId = courseId;
-      STATE.currentModuleId = moduleId;
-    }
-    navigate(pg);
-  });
 }
 
 // ── Boot ───────────────────────────────────────────────────────
